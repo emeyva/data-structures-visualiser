@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Visual Data Structures Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #linked-list-display {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Interactive Linked List</h1>
+        <form id="add-form" class="d-flex mb-3">
+            <input type="text" id="node-value" class="form-control" placeholder="Enter node value" required>
+            <button type="submit" class="btn btn-primary ms-2">Add Node</button>
+        </form>
+        <form id="delete-form" class="d-flex mb-3">
+            <input type="text" id="delete-value" class="form-control" placeholder="Enter value to delete" required>
+            <button type="submit" class="btn btn-danger ms-2">Delete Node</button>
+        </form>
+        <div id="linked-list-display" class="text-center"></div>
+    </div>
+
+    <script>
+        document.getElementById('add-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const value = document.getElementById('node-value').value;
+            const response = await fetch('/add_node', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ value: value })
+            });
+            const result = await response.json();
+            displayLinkedList(result);
+        });
+
+        document.getElementById('delete-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const value = document.getElementById('delete-value').value;
+            const response = await fetch('/delete_node', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ value: value })
+            });
+            const result = await response.json();
+            displayLinkedList(result);
+        });
+
+        async function fetchLinkedList() {
+            const response = await fetch('/get_linked_list');
+            const result = await response.json();
+            displayLinkedList(result);
+        }
+
+        function displayLinkedList(linkedList) {
+            const display = document.getElementById('linked-list-display');
+            display.innerHTML = '';
+            if (linkedList.length === 0) {
+                display.innerHTML = '<p class="text-muted">The linked list is empty.</p>';
+                return;
+            }
+            linkedList.forEach((node, index) => {
+                const nodeDiv = document.createElement('div');
+                nodeDiv.className = 'd-inline-block p-3 m-2 bg-primary text-white rounded';
+                nodeDiv.textContent = node.data;
+                display.appendChild(nodeDiv);
+                if (index < linkedList.length - 1) {
+                    const arrow = document.createElement('span');
+                    arrow.innerHTML = ' ➡️ ';
+                    display.appendChild(arrow);
+                }
+            });
+        }
+
+        // Fetch initial linked list on page load
+        fetchLinkedList();
+    </script>
+</body>
+</html>

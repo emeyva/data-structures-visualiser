@@ -1,15 +1,17 @@
-# Interactive Visual Data Structures Learning Tool (Browser-Based Version)
-# Updated Code Architecture
+"""Interactive Visual Data Structures Learning Tool (Browser-Based Version)
+ Updated Code Architecture"""
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify, request
+from data_structures.linked_list import LinkedList
+from data_structures.binary_tree import BinaryTree
+from data_structures.graph import Graph
 
 app = Flask(__name__)
-
-# Example data structures for visualization
-linked_list = []
+linked_list = LinkedList()
+linked_list.add(1)
 
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
 @app.route('/add_node', methods=['POST'])
@@ -17,23 +19,40 @@ def add_node():
     data = request.json
     value = data.get('value')
     if value is not None:
-        linked_list.append(value)
-        return jsonify({'status': 'success', 'linked_list': linked_list})
-    return jsonify({'status': 'error', 'message': 'Invalid input'}), 400
+        linked_list.add(value)
+        return linked_list.to_list()
 
 @app.route('/delete_node', methods=['POST'])
 def delete_node():
     data = request.json
     value = data.get('value')
-    if value in linked_list:
-        linked_list.remove(value)
-        return jsonify({'status': 'success', 'linked_list': linked_list})
-    return jsonify({'status': 'error', 'message': 'Value not found'}), 400
+    if value is not None:
+        linked_list.delete(value)
+        return linked_list.to_list()
 
 @app.route('/get_linked_list', methods=['GET'])
 def get_linked_list():
-    return jsonify({'linked_list': linked_list})
+    print(f"linked_list: {linked_list.to_list()}") 
+    return linked_list.to_list()
+
+@app.route('/linked-list')
+def linked_list_route():
+    return render_template('linked_list.html')
+
+@app.route('/binary-tree')
+def binary_tree_route():
+    tree = BinaryTree()
+    tree.insert(10)
+    tree.insert(5)
+    tree.insert(15)
+    return render_template('binary_tree.html', tree=tree)
+
+@app.route('/graph')
+def graph_route():
+    g = Graph()
+    g.add_edge('A', 'B')
+    g.add_edge('A', 'C')
+    return render_template('graph.html', graph=g)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
