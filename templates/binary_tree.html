@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Visual Data Structures Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Interactive Binary tree</h1>
+        <form id="add-form" class="d-flex mb-3">
+            <input type="text" id="node-value" class="form-control" placeholder="Enter node value" required>
+            <button type="submit" class="btn btn-primary ms-2">Add Node</button>
+        </form>
+        <form id="delete-form" class="d-flex mb-3">
+            <input type="text" id="delete-value" class="form-control" placeholder="Enter value to delete" required>
+            <button type="submit" class="btn btn-danger ms-2">Delete Node</button>
+        </form>
+    </div>
+
+    
+</body>
+</html>
