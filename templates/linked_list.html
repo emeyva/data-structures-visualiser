@@ -82,7 +82,7 @@
             linkedList.forEach((node, index) => {
                 const nodeDiv = document.createElement('div');
                 nodeDiv.className = 'd-inline-block p-3 m-2 bg-primary text-white rounded';
-                nodeDiv.textContent = node.data;
+                nodeDiv.textContent = node;
                 display.appendChild(nodeDiv);
                 if (index < linkedList.length - 1) {
                     const arrow = document.createElement('span');
