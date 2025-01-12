@@ -7,7 +7,7 @@ class TestLinkedList(unittest.TestCase):
         ll.add(1)
         ll.add(2)
         ll.add(3)
-        self.assertEqual(str(ll), '3 -> 2 -> 1')
+        self.assertEqual(str(ll), '1 -> 2 -> 3')
 
 if __name__ == '__main__':
     unittest.main()

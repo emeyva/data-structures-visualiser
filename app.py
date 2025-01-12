@@ -9,6 +9,8 @@ from data_structures.graph import Graph
 app = Flask(__name__)
 linked_list = LinkedList()
 linked_list.add(1)
+linked_list.add(2)
+linked_list.add(3)
 
 @app.route('/')
 def home():
@@ -19,7 +21,7 @@ def add_node():
     data = request.json
     value = data.get('value')
     if value is not None:
-        linked_list.add(value)
+        linked_list.add(int(value))
         return linked_list.to_list()
 
 @app.route('/delete_node', methods=['POST'])
@@ -27,12 +29,11 @@ def delete_node():
     data = request.json
     value = data.get('value')
     if value is not None:
-        linked_list.delete(value)
+        linked_list.delete(int(value))
         return linked_list.to_list()
 
 @app.route('/get_linked_list', methods=['GET'])
 def get_linked_list():
-    print(f"linked_list: {linked_list.to_list()}") 
     return linked_list.to_list()
 
 @app.route('/linked-list')
