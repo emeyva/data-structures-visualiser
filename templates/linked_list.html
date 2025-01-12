@@ -81,8 +81,17 @@
             }
             linkedList.forEach((node, index) => {
                 const nodeDiv = document.createElement('div');
-                nodeDiv.className = 'd-inline-block p-3 m-2 bg-primary text-white rounded';
-                nodeDiv.textContent = node;
+                
+                if(index == 0) {
+                    nodeDiv.textContent = "(H) "+node;
+                    nodeDiv.className = 'd-inline-block p-3 m-2 bg-dark text-white rounded';
+                }else if(index == linkedList.length -1){
+                    nodeDiv.textContent = "(T) "+node;
+                    nodeDiv.className = 'd-inline-block p-3 m-2 bg-dark text-white rounded';
+                }else{
+                    nodeDiv.textContent = node;
+                    nodeDiv.className = 'd-inline-block p-3 m-2 bg-dark text-white rounded';
+                }
                 display.appendChild(nodeDiv);
                 if (index < linkedList.length - 1) {
                     const arrow = document.createElement('span');
